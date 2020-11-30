@@ -39,8 +39,7 @@
       renderer.setSize(window.innerWidth, window.innerHeight);
       document.body.appendChild(renderer.domElement);
 
-      const light = new THREE.AmLight(0xff0000, 1, 100);
-      light.position.set(10, 10, 10);
+      const light = new THREE.AmbientLight(0xff0000, 1, 100);
       scene.add(light);
 
       const textureLoader = new THREE.CubeTextureLoader();
@@ -54,133 +53,12 @@
       ]);
       scene.background = texture;
 
-      // Create a clock
-      var clock = new THREE.Clock();
-
-      var camControls = new THREE.PointerLockControls(
-        camera,
-        renderer.domElement
-      );
-      var startButton = document.getElementById("startButton");
-
-      startButton.addEventListener(
-        "click",
-        function() {
-          camControls.lock();
-        },
-        false
-      );
-
-      camControls.addEventListener("lock", function() {
-        startButton.style.display = "none";
-      });
-
-      camControls.addEventListener("unlock", function() {
-        startButton.style.display = "block";
-      });
-
-      // Setup move controls
-      /* var camControls = new THREE.FirstPersonControls(camera, renderer.domElement);
-        camControls.lookSpeed = 0.1;
-        camControls.movementSpeed = 10;
-        camControls.noFly = true;
-        camControls.lookVertical = true;
-        camControls.constrainVertical = true;
-        camControls.verticalMin = 1.0;
-        camControls.verticalMax = 2.0;
-        camControls.lon = -150;
-        camControls.lat = 120;
-*/
-
-      //Lock the mouse controls into the window
-      // const controls = new PointerLockControls( camera, document.body );
-
-      // Load the stool object (using custom class)
-      var stool = new objectBase("stool.glb", scene, 0.05);
-
-      //Draw the Ground
-      const geometry = new THREE.PlaneGeometry(300, 300, 32);
-      const textureGround = new THREE.TextureLoader().load("images/ground.jpg");
-      const materialGround = new THREE.MeshBasicMaterial({
-        map: textureGround
-      });
-
-      const plane = new THREE.Mesh(geometry, materialGround);
-      plane.material.side = THREE.DoubleSide;
-      plane.rotation.x = Math.PI / 2;
-      plane.position.y = -10;
-      scene.add(plane);
-
-      //Draw Walls
-      var Walls = new Array();
-      function CreateWall(x1, y1, x2, y2) {
-        var size = 0;
-        var direction = 0;
-        size = Math.abs(x1 - x2);
-        if (size == 0) {
-          size = Math.abs(y1 - y2);
-          direction = 1;
-        }
-
-        const geometry = new THREE.PlaneGeometry(size, 15, 1);
-        const material = new THREE.MeshBasicMaterial({ color: 0x00ff00 });
-        material.side = THREE.DoubleSide;
-        const plane = new THREE.Mesh(geometry, material);
-        if (direction) {
-          plane.rotation.y = Math.PI / 2;
-        } else {
-          plane.rotation.y = Math.PI;
-        }
-        //plane.position.y=x1;
-        plane.position.y = -8;
-        plane.position.x = x1;
-        plane.position.z = y1;
-        scene.add(plane);
-        Walls.push(plane);
-      }
-      CreateWall(10, 1, 10, 50);
-      CreateWall(-10, 1, -10, 50);
-      CreateWall(-20, -20, 20, -20);
-
-      // Som animation for teh stool
-      var directionX = 1;
-      var directionY = 1;
-      // Loop
-      function animate() {
-        var delta = clock.getDelta();
-        //camControls.update(delta);
-
-        requestAnimationFrame(animate);
-
-        renderer.render(scene, camera);
-        document.title = stool.obj.position.x;
-        stool.frameMove();
-        renderer.render(scene, camera);
+      function animare() {
+          requestAnimationFrame(animare);
+          renderer.render(scene, camera);
       }
       animate();
-
-      //keyboard input (old way)
-      document.addEventListener("keydown", onDocumentKeyDown, false);
-      function onDocumentKeyDown(event) {
-        var keyCode = event.which;
-        console.log(keyCode);
-
-        //Forward
-        if (keyCode == 38) {
-          var direction = new THREE.Vector3();
-          camera.getWorldDirection(direction);
-          camera.position.addScaledVector(direction, 1);
-        } else if (keyCode == 40) {
-          var direction = new THREE.Vector3();
-          camera.getWorldDirection(direction);
-          camera.position.addScaledVector(direction, -1);
-        } else if (keyCode == 39) {
-          //Left
-          camera.rotation.y -= 0.05;
-        } else if (keyCode == 37) {
-          // Right
-          camera.rotation.y += 0.05;
-        }
+     
       }</script
     ><canvas
       width="1920"
