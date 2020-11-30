@@ -24,12 +24,10 @@
     <script src="classObjectBase.js"></script>
     <script src="three.min.js"></script>
     <script src="PointerLockControls.js"></script>
-    <script src="FirstPersonControls.js"></script>
     <script src="GLTFLoader.js"></script>
     <script>
-      // Basic initalization of the scene
       const scene = new THREE.Scene();
-      // Setup the camera
+
       const camera = new THREE.PerspectiveCamera(
         50,
         window.innerWidth / window.innerHeight,
@@ -37,18 +35,14 @@
         1000
       );
 
-      // Prepare the rendered ,set its size and attach it to the document
       const renderer = new THREE.WebGLRenderer();
       renderer.setSize(window.innerWidth, window.innerHeight);
       document.body.appendChild(renderer.domElement);
 
-      //Add some light
-      const light = new THREE.PointLight(0xff0000, 1, 100);
+      const light = new THREE.AmLight(0xff0000, 1, 100);
       light.position.set(10, 10, 10);
       scene.add(light);
 
-      //Load Skybox
-      // Loads textures of all sizes of the box
       const textureLoader = new THREE.CubeTextureLoader();
       const texture = textureLoader.load([
         "images/skybox_left.JPG",
