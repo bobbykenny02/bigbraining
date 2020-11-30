@@ -6,7 +6,7 @@
 </head>
 
 <body>
-    <input type="button" id='startButton' value="START" style="position: absolute; top:100;left:50%; font-size:40px;">
+    <input type="button" id="startButton" value="START" style="position: absolute; top:100;left:50%; font-size:40px;">
     <style>
         html,
         body {
@@ -29,19 +29,16 @@
         // Setup the camera
         const camera = new THREE.PerspectiveCamera(50, window.innerWidth / window.innerHeight, 0.1, 1000);
 
-        // Prepare the rendered ,set its size and attach it to the document
+        // Prepare the rendered, set its size and attach it to the document
+       // This adds a "canvas" html elemetn to the body
         const renderer = new THREE.WebGLRenderer();
         renderer.setSize(window.innerWidth, window.innerHeight);
         document.body.appendChild(renderer.domElement);
 
 
-        //Add some light 
-                //Add some light        
-                const light = new THREE.PointLight(0xff0000, 1, 100);
-        light.position.set(10, 10, 10);
+        //Add some light         
+        const light = new THREE.AmbientLight( 0x404040 ); // soft white light
         scene.add(light);
-//        const light = new THREE.AmbientLight( 0x404040 ); // soft white light
-        //scene.add(light);
        
 
         //Load Skybox
@@ -56,7 +53,6 @@
             'images/skybox_front.JPG',
         ]);
         scene.background = texture;
-
 
         var camControls  = new THREE.PointerLockControls(camera, renderer.domElement);
         var startButton=document.getElementById('startButton');
@@ -76,15 +72,21 @@
         const textureGround = new THREE.TextureLoader().load( "images/ground.jpg" );
         const material = new THREE.MeshBasicMaterial( { map:textureGround, side: THREE.DoubleSide} );
         const plane = new THREE.Mesh( geometry, material );
+        // Drop the ground 5 units down
         plane.position.y=-5;
+        // Rotate 90 degrees so its flat
         plane.rotation.x= Math.PI / 2;
         scene.add( plane );
 
+      
+        // array of stool object
         var stool = new Array();
-
+        // Generate some stools
         for (var i=0; i<5; i++) {
             var stool1 = new objectBase("stool.glb", scene, 0.05);
+            // Position them
             stool1.moveTo((i*3),-5,0);
+            //add to array
             stool.push(stool1);
         }
 
@@ -188,9 +190,6 @@
                 document.getElementById("Question").style.display="block";
                 document.getElementById("position").src="page1.html";
             }
-
-
-            
 
             requestAnimationFrame(animate);
             renderer.render(scene, camera);
