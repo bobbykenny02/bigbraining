@@ -1,0 +1,20 @@
+<html>
+    <style>
+        body {
+            background:white;
+        } 
+    </style>
+    <body>
+        <h1>The more you take, the more you leave behind. What am I?</h1>
+        <form><input id="whatami" name="whatami"><input type="button" onclick="check()"></form>
+        <script>
+            function check() {
+                if (document.getElementById("whatami").value.toLowerCase()=="footsteps") {
+                    
+                    window.parent.postMessage("page1 correct");
+                    alert(1);
+                }
+            }
+        </script>
+    </body>
+</html>

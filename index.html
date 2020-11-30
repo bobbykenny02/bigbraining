@@ -1,0 +1,212 @@
+<html>
+
+<head>
+    <meta content="text/html;charset=utf-8" http-equiv="Content-Type">
+    <meta content="utf-8" http-equiv="encoding">
+</head>
+
+<body>
+    <input type="button" id='startButton' value="START" style="position: absolute; top:100;left:50%;">
+    <style>
+        html,
+        body {
+            margin: 0;
+            padding: 0;
+            height: 100%;
+            width: 100%;
+        }
+    </style>
+    <script src="classObjectBase.js"></script>
+    <script src="three.js"></script>
+    <script src="PointerLockControls.js"></script>
+    <script src="GLTFLoader.js"></script>
+    
+
+    <script>
+
+        // Basic initalization of the scene
+        const scene = new THREE.Scene();
+        // Setup the camera
+        const camera = new THREE.PerspectiveCamera(50, window.innerWidth / window.innerHeight, 0.1, 1000);
+
+        // Prepare the rendered ,set its size and attach it to the document
+        const renderer = new THREE.WebGLRenderer();
+        renderer.setSize(window.innerWidth, window.innerHeight);
+        document.body.appendChild(renderer.domElement);
+
+
+        //Add some light 
+                //Add some light        
+                const light = new THREE.PointLight(0xff0000, 1, 100);
+        light.position.set(10, 10, 10);
+        scene.add(light);
+//        const light = new THREE.AmbientLight( 0x404040 ); // soft white light
+        //scene.add(light);
+       
+
+        //Load Skybox
+        // Loads textures of all sizes of the box
+        const textureLoader = new THREE.CubeTextureLoader();
+        const texture = textureLoader.load([
+            'images/skybox_left.JPG',
+            'images/skybox_right.JPG',
+            'images/skybox_top.JPG',
+            'images/skybox_bottom.JPG',
+            'images/skybox_back.JPG',
+            'images/skybox_front.JPG',
+        ]);
+        scene.background = texture;
+
+
+        var camControls  = new THREE.PointerLockControls(camera, renderer.domElement);
+        var startButton=document.getElementById('startButton');
+        startButton.addEventListener('click', function() {
+            camControls.lock();
+        },false);
+        camControls.addEventListener( 'lock', function () {
+            startButton.style.display = 'none';
+        } );        
+        camControls.addEventListener( 'unlock', function () {
+            startButton.style.display = 'block';
+        } );
+
+
+        //Ground
+        const geometry = new THREE.PlaneGeometry( 60, 60, 32 );
+        const textureGround = new THREE.TextureLoader().load( "images/ground.jpg" );
+        const material = new THREE.MeshBasicMaterial( { map:textureGround, side: THREE.DoubleSide} );
+        const plane = new THREE.Mesh( geometry, material );
+        plane.position.y=-5;
+        plane.rotation.x= Math.PI / 2;
+        scene.add( plane );
+
+        var stool = new Array();
+
+        for (var i=0; i<5; i++) {
+            var stool1 = new objectBase("stool.glb", scene, 0.05);
+            stool1.moveTo((i*3),-5,0);
+            stool.push(stool1);
+        }
+
+        var isForward=0;
+        var isRunning=0;   
+        var isJump=0; 
+
+        document.addEventListener("keyup", onDocumentKeyUp, false);
+        function onDocumentKeyUp(event) {
+            var keyCode = event.which;
+            console.log(keyCode);
+            if (keyCode == 38) {
+                isForward=0;
+            }
+            if (keyCode == 40) {
+                isForward=0;
+            }
+            if (keyCode==16) {
+                isRunning=0;
+            }
+        }
+        document.addEventListener("keydown", onDocumentKeyDown, false);
+        function onDocumentKeyDown(event) {
+            var keyCode = event.which;
+            console.log(keyCode);
+            //UP
+            if (keyCode == 38) {
+                isForward=1;
+            }
+            //LEFT
+            if (keyCode == 37) {
+                var direction = new THREE.Vector3;
+                camera.getWorldDirection(direction);
+                var axis = new THREE.Vector3( 0, 1, 0 );
+                direction.applyAxisAngle( axis, Math.PI/2 );
+                camera.position.addScaledVector(direction,0.5)
+            }
+            //RIGHT
+            if (keyCode == 39) {
+                var direction = new THREE.Vector3;
+                camera.getWorldDirection(direction);
+                var axis = new THREE.Vector3( 0, 1, 0 );
+                direction.applyAxisAngle( axis, Math.PI/2 );
+                camera.position.addScaledVector(direction,-0.5)
+
+            }
+            //DOWN
+            if (keyCode == 40) {
+                isForward=-1;
+            }
+            if (keyCode==16) {
+                isRunning=1;
+            }
+            if (keyCode==32) {
+                isJump=1;
+            }
+
+        }
+
+        var clock = new THREE.Clock();
+        function animate() {
+            for (var i=0; i<5; i++) {
+                stool[i].frameMove();
+            }
+            var delta = clock.getDelta();
+
+            if (isForward) {
+                var direction = new THREE.Vector3;
+                camera.getWorldDirection(direction);
+                var speed=2;
+                if (isRunning) speed=6;
+                camera.position.addScaledVector(direction, speed  * delta * isForward);
+            }
+
+            if (isJump) {
+                if(camera.position.y>2) {
+                    isJump=-1;
+                }
+                var modifier=camera.position.y;
+                modifier=2-modifier*2;
+
+                camera.position.y=camera.position.y + ((4+modifier)*isJump*delta);
+                document.title=camera.position.y;
+                if(camera.position.y<0) {
+                    isJump=0;
+                }
+            } else {
+                camera.position.y=0;
+            }
+
+            // Make sure I cant leave the ground
+            
+            if(camera.position.x>15) camera.position.x=15;
+            if(camera.position.x<-15) camera.position.x=-15;
+            if(camera.position.z>15) camera.position.z=15;
+            if(camera.position.z<-15) camera.position.z=-15;
+
+            if(camera.position.x<15 && camera.position.x>10 &&
+               camera.position.z<15 && camera.position.z>10
+                ) {                
+                document.getElementById("Question").style.display="block";
+                document.getElementById("position").src="page1.html";
+            }
+
+
+            
+
+            requestAnimationFrame(animate);
+            renderer.render(scene, camera);
+        }
+        animate();
+
+        window.addEventListener("message", (event) => {
+            if (event.data=="page1 correct") {
+                document.getElementById("Question").style.display="none";
+            }
+        }, false);
+
+    </script>
+    <div style="display:none; position:absolute; left:calc( 50% - 200px ); top:50%; width:400px; height:200px; background:black; color: white;" id="Question" >
+        <iframe id="position" width="100%" height="100%"></iframe>
+    </div>
+</body>
+
+</html>
