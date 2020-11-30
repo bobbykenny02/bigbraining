@@ -1,82 +1,92 @@
-<html><head>
-    <meta content="text/html;charset=utf-8" http-equiv="Content-Type">
-    <meta content="utf-8" http-equiv="encoding">
-<title>-2.129999999999999</title></head>
+<html>
+  <head>
+    <meta content="text/html;charset=utf-8" http-equiv="Content-Type" />
+    <meta content="utf-8" http-equiv="encoding" />
+    <title>-2.129999999999999</title>
+  </head>
 
-<body>
-    <input type="button" id="startButton" value="START" style="position: absolute; top:100;left:100;">
+  <body>
+    <input
+      type="button"
+      id="startButton"
+      value="START"
+      style="position: absolute; top:100;left:100;"
+    />
     <style>
-        html,
-        body {
-            margin: 0;
-            padding: 0;
-            height: 100%;
-            width: 100%;
-        }
+      html,
+      body {
+        margin: 0;
+        padding: 0;
+        height: 100%;
+        width: 100%;
+      }
     </style>
-    <script src="classObjectBase.js"></script>    
+    <script src="classObjectBase.js"></script>
     <script src="three.min.js"></script>
     <script src="PointerLockControls.js"></script>
     <script src="FirstPersonControls.js"></script>
     <script src="GLTFLoader.js"></script>
     <script>
+      // Basic initalization of the scene
+      const scene = new THREE.Scene();
+      // Setup the camera
+      const camera = new THREE.PerspectiveCamera(
+        50,
+        window.innerWidth / window.innerHeight,
+        0.1,
+        1000
+      );
 
-        // Basic initalization of the scene
-        const scene = new THREE.Scene();
-        // Setup the camera
-        const camera = new THREE.PerspectiveCamera(50, window.innerWidth / window.innerHeight, 0.1, 1000);
+      // Prepare the rendered ,set its size and attach it to the document
+      const renderer = new THREE.WebGLRenderer();
+      renderer.setSize(window.innerWidth, window.innerHeight);
+      document.body.appendChild(renderer.domElement);
 
-        // Prepare the rendered ,set its size and attach it to the document
-        const renderer = new THREE.WebGLRenderer();
-        renderer.setSize(window.innerWidth, window.innerHeight);
-        document.body.appendChild(renderer.domElement);
+      //Add some light
+      const light = new THREE.PointLight(0xff0000, 1, 100);
+      light.position.set(10, 10, 10);
+      scene.add(light);
 
+      //Load Skybox
+      // Loads textures of all sizes of the box
+      const textureLoader = new THREE.CubeTextureLoader();
+      const texture = textureLoader.load([
+        "images/skybox_left.JPG",
+        "images/skybox_right.JPG",
+        "images/skybox_top.JPG",
+        "images/skybox_bottom.JPG",
+        "images/skybox_back.JPG",
+        "images/skybox_front.JPG"
+      ]);
+      scene.background = texture;
 
-        //Add some light        
-        const light = new THREE.PointLight(0xff0000, 1, 100);
-        light.position.set(10, 10, 10);
-        scene.add(light);
+      // Create a clock
+      var clock = new THREE.Clock();
 
+      var camControls = new THREE.PointerLockControls(
+        camera,
+        renderer.domElement
+      );
+      var startButton = document.getElementById("startButton");
 
-        //Load Skybox
-        // Loads textures of all sizes of the box
-        const textureLoader = new THREE.CubeTextureLoader();
-        const texture = textureLoader.load([
-            'images/skybox_left.JPG',
-            'images/skybox_right.JPG',
-            'images/skybox_top.JPG',
-            'images/skybox_bottom.JPG',            
-            'images/skybox_back.JPG',
-            'images/skybox_front.JPG',
-        ]);
-        scene.background = texture;
+      startButton.addEventListener(
+        "click",
+        function() {
+          camControls.lock();
+        },
+        false
+      );
 
-        // Create a clock
-        var clock = new THREE.Clock();
+      camControls.addEventListener("lock", function() {
+        startButton.style.display = "none";
+      });
 
-        
-        var camControls  = new THREE.PointerLockControls(camera, renderer.domElement);
-        var startButton=document.getElementById('startButton');
+      camControls.addEventListener("unlock", function() {
+        startButton.style.display = "block";
+      });
 
-        startButton.addEventListener('click', function() {
-            camControls.lock();
-        }
-        ,false) ;
-
-        camControls.addEventListener( 'lock', function () {
-
-            startButton.style.display = 'none';
-
-} );
-
-camControls.addEventListener( 'unlock', function () {
-
-    startButton.style.display = 'block';
-
-} );
-
-        // Setup move controls
-       /* var camControls = new THREE.FirstPersonControls(camera, renderer.domElement);
+      // Setup move controls
+      /* var camControls = new THREE.FirstPersonControls(camera, renderer.domElement);
         camControls.lookSpeed = 0.1;
         camControls.movementSpeed = 10;
         camControls.noFly = true;
@@ -87,107 +97,101 @@ camControls.addEventListener( 'unlock', function () {
         camControls.lon = -150;
         camControls.lat = 120;
 */
-        
-        //Lock the mouse controls into the window
-       // const controls = new PointerLockControls( camera, document.body );
 
-        // Load the stool object (using custom class)
-        var stool = new objectBase("stool.glb", scene, 0.05);
+      //Lock the mouse controls into the window
+      // const controls = new PointerLockControls( camera, document.body );
 
+      // Load the stool object (using custom class)
+      var stool = new objectBase("stool.glb", scene, 0.05);
 
-        //Draw the Ground
-        const geometry = new THREE.PlaneGeometry( 300, 300, 32 );
-        const textureGround = new THREE.TextureLoader().load( "images/ground.jpg" );
-        const materialGround = new THREE.MeshBasicMaterial (  { map:textureGround } );
-        
-        const plane = new THREE.Mesh( geometry, materialGround );
-        plane.material.side = THREE.DoubleSide;
-        plane.rotation.x= Math.PI / 2;
-        plane.position.y=-10;
-        scene.add( plane );
-        
-        //Draw Walls
-        var Walls = new Array();
-        function CreateWall(x1,y1,x2,y2) {
-            var size=0;
-            var direction=0;
-            size=Math.abs(x1-x2);
-            if (size==0) {
-                size=Math.abs(y1-y2);
-                direction=1;
-            }
+      //Draw the Ground
+      const geometry = new THREE.PlaneGeometry(300, 300, 32);
+      const textureGround = new THREE.TextureLoader().load("images/ground.jpg");
+      const materialGround = new THREE.MeshBasicMaterial({
+        map: textureGround
+      });
 
-            const geometry = new THREE.PlaneGeometry( size, 15, 1 );
-            const material = new THREE.MeshBasicMaterial({ color: 0x00ff00 });
-            material.side=THREE.DoubleSide;
-            const plane = new THREE.Mesh( geometry, material );
-            if (direction) {
-                plane.rotation.y= Math.PI / 2;
-            } else {
-                plane.rotation.y= Math.PI;
-            }
-            //plane.position.y=x1;
-            plane.position.y=-8;
-            plane.position.x=x1;
-            plane.position.z=y1;
-            scene.add(plane);
-            Walls.push(plane);
-            
+      const plane = new THREE.Mesh(geometry, materialGround);
+      plane.material.side = THREE.DoubleSide;
+      plane.rotation.x = Math.PI / 2;
+      plane.position.y = -10;
+      scene.add(plane);
+
+      //Draw Walls
+      var Walls = new Array();
+      function CreateWall(x1, y1, x2, y2) {
+        var size = 0;
+        var direction = 0;
+        size = Math.abs(x1 - x2);
+        if (size == 0) {
+          size = Math.abs(y1 - y2);
+          direction = 1;
         }
-        CreateWall(10,1,10,50);
-        CreateWall(-10,1,-10,50);
-        CreateWall(-20,-20,20,-20);
 
-
-        // Som animation for teh stool
-        var directionX = 1;
-        var directionY = 1;
-        // Loop
-        function animate() {
-
-            var delta = clock.getDelta();
-            //camControls.update(delta);
-
-
-            requestAnimationFrame(animate);
-
-
-            renderer.render(scene, camera);
-            document.title = stool.obj.position.x;
-            stool.frameMove();
-            renderer.render(scene, camera);
+        const geometry = new THREE.PlaneGeometry(size, 15, 1);
+        const material = new THREE.MeshBasicMaterial({ color: 0x00ff00 });
+        material.side = THREE.DoubleSide;
+        const plane = new THREE.Mesh(geometry, material);
+        if (direction) {
+          plane.rotation.y = Math.PI / 2;
+        } else {
+          plane.rotation.y = Math.PI;
         }
-        animate();
+        //plane.position.y=x1;
+        plane.position.y = -8;
+        plane.position.x = x1;
+        plane.position.z = y1;
+        scene.add(plane);
+        Walls.push(plane);
+      }
+      CreateWall(10, 1, 10, 50);
+      CreateWall(-10, 1, -10, 50);
+      CreateWall(-20, -20, 20, -20);
 
+      // Som animation for teh stool
+      var directionX = 1;
+      var directionY = 1;
+      // Loop
+      function animate() {
+        var delta = clock.getDelta();
+        //camControls.update(delta);
 
+        requestAnimationFrame(animate);
 
+        renderer.render(scene, camera);
+        document.title = stool.obj.position.x;
+        stool.frameMove();
+        renderer.render(scene, camera);
+      }
+      animate();
 
-        //keyboard input (old way)
-document.addEventListener("keydown", onDocumentKeyDown, false);
-function onDocumentKeyDown(event) {
-    
-    var keyCode = event.which;
-    console.log(keyCode);
+      //keyboard input (old way)
+      document.addEventListener("keydown", onDocumentKeyDown, false);
+      function onDocumentKeyDown(event) {
+        var keyCode = event.which;
+        console.log(keyCode);
 
-    //Forward
-    if (keyCode == 38) {
-        var direction = new THREE.Vector3;
-        camera.getWorldDirection(direction);
-        camera.position.addScaledVector(direction, 1);
-    } else if (keyCode == 40) {
-        var direction = new THREE.Vector3;
-        camera.getWorldDirection(direction);
-        camera.position.addScaledVector(direction, -1);
-    } else if (keyCode == 39) { //Left
-        camera.rotation.y -= 0.05;
-    } else if (keyCode == 37) { // Right
-        camera.rotation.y += 0.05;
-    }
-};
-
-
-
-    </script><canvas width="1920" height="975" style="width: 1920px; height: 975px;"></canvas>
-
-
-</body></html>
+        //Forward
+        if (keyCode == 38) {
+          var direction = new THREE.Vector3();
+          camera.getWorldDirection(direction);
+          camera.position.addScaledVector(direction, 1);
+        } else if (keyCode == 40) {
+          var direction = new THREE.Vector3();
+          camera.getWorldDirection(direction);
+          camera.position.addScaledVector(direction, -1);
+        } else if (keyCode == 39) {
+          //Left
+          camera.rotation.y -= 0.05;
+        } else if (keyCode == 37) {
+          // Right
+          camera.rotation.y += 0.05;
+        }
+      }</script
+    ><canvas
+      width="1920"
+      height="975"
+      style="width: 1920px; height: 975px;"
+    ></canvas>
+  </body>
+</html>

@@ -77,27 +77,12 @@ camControls.addEventListener( 'unlock', function () {
 
 } );
 
-        // Setup move controls
-       /* var camControls = new THREE.FirstPersonControls(camera, renderer.domElement);
-        camControls.lookSpeed = 0.1;
-        camControls.movementSpeed = 10;
-        camControls.noFly = true;
-        camControls.lookVertical = true;
-        camControls.constrainVertical = true;
-        camControls.verticalMin = 1.0;
-        camControls.verticalMax = 2.0;
-        camControls.lon = -150;
-        camControls.lat = 120;
-*/
-        
-        //Lock the mouse controls into the window
-       // const controls = new PointerLockControls( camera, document.body );
 
-        // Load the stool object (using custom class)
+        
         var stool = new objectBase("stool.glb", scene, 0.05);
 
 
-        //Draw the Ground
+      
         const geometry = new THREE.PlaneGeometry( 300, 300, 32 );
         const textureGround = new THREE.TextureLoader().load( "images/ground.jpg" );
         const materialGround = new THREE.MeshBasicMaterial (  { map:textureGround } );
