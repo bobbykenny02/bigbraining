@@ -50,12 +50,18 @@
       // Loads textures of all sizes of the box
       const textureLoader = new THREE.CubeTextureLoader();
       const texture = textureLoader.load([
-        "assets/skybox_left.jpg",
-        "assets/skybox_right.jpg",
-        "assets/skybox_top.jpg",
-        "assets/skybox_bottom.jpg",
-        "assets/skybox_back.jpg",
-        "assets/skybox_front.jpg"
+        //left
+        "https://cdn.glitch.com/b9d23cc2-ac7b-467c-83e6-a5871a501bc4%2Fskybox_left.jpg?v=1606695128558",
+        ///right
+        "https://cdn.glitch.com/b9d23cc2-ac7b-467c-83e6-a5871a501bc4%2Fskybox_right.jpg?v=1606695128579",
+        //top
+        "https://cdn.glitch.com/b9d23cc2-ac7b-467c-83e6-a5871a501bc4%2Fskybox_top.jpg?v=1606695128608",
+        //bottom
+        "https://cdn.glitch.com/b9d23cc2-ac7b-467c-83e6-a5871a501bc4%2Fskybox_bottom.jpg?v=1606695128112",
+        //back
+        "https://cdn.glitch.com/b9d23cc2-ac7b-467c-83e6-a5871a501bc4%2Fskybox_back.jpg?v=1606695128500",
+        //front
+        "https://cdn.glitch.com/b9d23cc2-ac7b-467c-83e6-a5871a501bc4%2Fskybox_front.jpg?v=1606695128536"
       ]);
       scene.background = texture;
 
@@ -80,7 +86,9 @@
 
       //Ground
       const geometry = new THREE.PlaneGeometry(60, 60, 32);
-      const textureGround = new THREE.TextureLoader().load("assets/ground.jpg");
+      const textureGround = new THREE.TextureLoader().load(
+        "https://cdn.glitch.com/b9d23cc2-ac7b-467c-83e6-a5871a501bc4%2Fground.jpg?v=1606783300582"
+      );
       const material = new THREE.MeshBasicMaterial({
         map: textureGround,
         side: THREE.DoubleSide
