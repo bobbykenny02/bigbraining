@@ -51,17 +51,17 @@
       const textureLoader = new THREE.CubeTextureLoader();
       const texture = textureLoader.load([
         //left
-        "https://cdn.glitch.com/b9d23cc2-ac7b-467c-83e6-a5871a501bc4%2Fskybox_left.jpg?v=1606695128558",
+        "assets/skybox_left.jpg",
         ///right
-        "https://cdn.glitch.com/b9d23cc2-ac7b-467c-83e6-a5871a501bc4%2Fskybox_right.jpg?v=1606695128579",
+        "assets/skybox_right.jpg",
         //top
-        "https://cdn.glitch.com/b9d23cc2-ac7b-467c-83e6-a5871a501bc4%2Fskybox_top.jpg?v=1606695128608",
+        "assets/skybox_top.jpg",
         //bottom
-        "https://cdn.glitch.com/b9d23cc2-ac7b-467c-83e6-a5871a501bc4%2Fskybox_bottom.jpg?v=1606695128112",
+        "assets/skybox_bottom.jpg",
         //back
-        "https://cdn.glitch.com/b9d23cc2-ac7b-467c-83e6-a5871a501bc4%2Fskybox_back.jpg?v=1606695128500",
+        "assets/skybox_back.jpg",
         //front
-        "https://cdn.glitch.com/b9d23cc2-ac7b-467c-83e6-a5871a501bc4%2Fskybox_front.jpg?v=1606695128536"
+        "assets/skybox_front.jpg"
       ]);
       scene.background = texture;
 
@@ -103,14 +103,14 @@
       // array of stool object
       var stool = new Array();
       // Generate some stools
-      for (var i = 0; i < 5; i++) {
+      /*for (var i = 0; i < 5; i++) {
         var stool1 = new objectBase("stool.glb", scene, 0.05);
         // Position them
         stool1.moveTo(i * 3, -5, 0);
         //add to array
         stool.push(stool1);
       }
-
+*/
       var isForward = 0;
       var isRunning = 0;
       var isJump = 0;
@@ -168,7 +168,7 @@
       var clock = new THREE.Clock();
       function animate() {
         for (var i = 0; i < 5; i++) {
-          stool[i].frameMove();
+          // stool[i].frameMove();
         }
         var delta = clock.getDelta();
 
