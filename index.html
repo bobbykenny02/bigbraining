@@ -103,14 +103,14 @@
       // array of stool object
       var stool = new Array();
       // Generate some stools
-      /*for (var i = 0; i < 5; i++) {
-        var stool1 = new objectBase("stool.glb", scene, 0.05);
+      for (var i = 0; i < 5; i++) {
+        var stool1 = new objectBase("assets/stool.glb", scene, 0.05);
         // Position them
         stool1.moveTo(i * 3, -5, 0);
         //add to array
         stool.push(stool1);
       }
-*/
+
       var isForward = 0;
       var isRunning = 0;
       var isJump = 0;
@@ -168,7 +168,7 @@
       var clock = new THREE.Clock();
       function animate() {
         for (var i = 0; i < 5; i++) {
-          // stool[i].frameMove();
+          stool[i].frameMove();
         }
         var delta = clock.getDelta();
 

@@ -11,7 +11,7 @@ class objectBase {
         // Load from url 
         const loader = new THREE.GLTFLoader();
         loader.load(
-            "stool.glb",
+            url,
             (res) =>  {
                 var x= this.obj.position.x;
                 var y= this.obj.position.y;
