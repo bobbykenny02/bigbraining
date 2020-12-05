@@ -10,6 +10,7 @@
       id="startButton"
       value="START"
       style="position: absolute; top:100;left:50%; font-size:40px;"
+        
     />
     <style>
       html,
@@ -110,6 +111,7 @@
         stool1.moveTo(i * 10, -10, 15);
         //add to array
         stool.push(stool1);
+        rotate.amunguspink.glb;
       }
 
       //Moving
@@ -207,12 +209,13 @@
         if (camera.position.z < -15) camera.position.z = -15;
 
         //trigger corner
-        if (
+        if ( 
           camera.position.x < 15 &&
           camera.position.x > 10 &&
           camera.position.z < 15 &&
           camera.position.z > 10
-        ) {
+        )            
+          {
           document.getElementById("Question").style.display = "block";
           document.getElementById("position").src = "page1.html";
         }
