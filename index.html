@@ -104,16 +104,13 @@
       // array of stool object
       var stool = new Array();
 
-      // Generate some amungus
+      // Generate some amunguspink
       for (var i = 0; i < 10; i++) {
-        var pink = new objectBase("assets/amonguspink.glb", scene, 0.05);
-                    pink.moveTo(i * Math.random(), Math.random(), Math.random());
-        var cyan = new objectBase("assets/amonguscyan.glb", scene, 0.05);
-                    cyan.moveTo(i * Math.random(), Math.random(), Math.random());
-        var blue = new objectBase("assets/amongusblue.glb", scene, 0.05);
-                    blue.moveTo(i * Math.random(), Math.random(), Math.random());
-        
-        
+        var stool1 = new objectBase("assets/amongusblack.glb", scene, 0.05);
+        // Position them
+        stool1.moveTo(i * 10, -10, 15);
+        //add to array
+        stool.push(stool1);
         
       }
 
