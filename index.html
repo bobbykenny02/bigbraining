@@ -111,7 +111,9 @@
         stool1.moveTo(i * 10, -10, 15);
         //add to array
         stool.push(stool1);
-        rotate.amunguspink.glb;
+        
+        mesh.rotateOnAxis( axis, Math.PI * 0.01 ); 
+        renderer.amunguspink( scene, camera );
       }
 
       //Moving
