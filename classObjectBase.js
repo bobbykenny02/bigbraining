@@ -25,6 +25,7 @@ class objectBase {
       undefined,
       function(error) {
         console.error(error);
+        alser(1);
       }
     );
     scene.add(this.obj);
