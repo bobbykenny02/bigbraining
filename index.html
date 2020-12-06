@@ -131,7 +131,7 @@
         var stool1 = listofchar[index];
         listofchar.splice(index, 1);
         // Position them
-        stool1.moveTo(i * 10, -10, 15);
+        stool1.moveTo(Math.floor(Math.random() * 60)-30, Math.floor(Math.random() * 60)-30, 15);
         //add to array
         stool.push(stool1);
       }
