@@ -101,6 +101,18 @@
       plane.rotation.x = Math.PI / 2;
       scene.add(plane);
 
+            // array of stool object
+      var stool = new Array();
+      // Generate some stools
+      for (var i = 0; i < 5; i++) {
+        var stool1 = new objectBase("assets/stool.glb", scene, 0.05);
+        // Position them
+        stool1.moveTo(i * 3, -5, 0);
+        //add to array
+        stool.push(stool1);
+      }
+      
+      
       // array of stool object
       var stool = new Array();
 
@@ -132,7 +144,7 @@
       var stool1 = listofchar[index];
 
       // Position them
-      stool1.moveTo(i * 10, -10, 15);
+      stool1.moveTo(stool1 * 10, -10, 15);
       //add to array
       stool.push(stool1);
 
