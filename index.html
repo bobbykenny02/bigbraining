@@ -106,7 +106,13 @@
 
       // Generate some amunguspink
       for (var i = 0; i < 10; i++) {
+        index = math.floor(math.random() * 10);
         var stool1 = new objectBase("assets/amongusblack.glb", scene, 0.05);
+        var listofchar = [objectBase("assets/amongusblack.glb", scene, 0.05), objectBase("assets/amongusblue.glb", scene, 0.05), objectBase("assets/amongusbrown.glb", scene, 0.05)
+                         objectBase("assets/amonguscyan.glb", scene, 0.05), objectBase("assets/amongusgreen.glb", scene, 0.05), objectBase("assets/amonguslime.glb", scene, 0.05),
+                         objectBase("assets/amongusorange.glb", scene, 0.05), objectBase("assets/amonguspink.glb", scene, 0.05), objectBase("assets/amongusred.glb", scene, 0.05),
+                         objectBase("assets/amongusyellow.glb", scene, 0.05)]
+        var chosenchar = 
         // Position them
         stool1.moveTo(i * 10, -10, 15);
         //add to array
