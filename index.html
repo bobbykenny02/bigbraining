@@ -113,10 +113,8 @@
       var pink = new objectBase("assets/amonguspink.glb", scene, 0.05);
       var red = new objectBase("assets/amongusred.glb", scene, 0.05);
       var yellow = new objectBase("assets/amongusyellow.glb", scene, 0.05);
-
-      for (var i = 0; i < 5; i++) {
-        index = Math.floor(Math.random() * 9);
-        var listofchar = [
+      
+      var listofchar = [
           black,
           blue,
           brown,
@@ -129,6 +127,8 @@
           yellow
         ];
 
+      for (var i = 0; i < 5; i++) {
+        index = Math.floor(Math.random() * listofchar.length);
         var stool1 = listofchar[index];
         listofchar.splice(index, 1)
         // Position them
