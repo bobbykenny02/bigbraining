@@ -10,6 +10,7 @@
       id="startButton"
       value="START"
       style="position: absolute; top:100;left:50%; font-size:40px;"
+        
     />
     <style>
       html,
@@ -102,13 +103,18 @@
 
       // array of stool object
       var stool = new Array();
-      // Generate some stools
+
+      // Generate some amungus
       for (var i = 0; i < 10; i++) {
-        var stool1 = new objectBase("assets/amunguspink.glb", scene, 0.05);
-        // Position them
-        stool1.moveTo(i * 3, -5, 0);
-        //add to array
-        stool.push(stool1);
+        var pink = new objectBase("assets/amonguspink.glb", scene, 0.05);
+                    pink.moveTo(i * Math.random(), Math.random(), Math.random());
+        var cyan = new objectBase("assets/amonguscyan.glb", scene, 0.05);
+                    cyan.moveTo(i * Math.random(), Math.random(), Math.random());
+        var blue = new objectBase("assets/amongusblue.glb", scene, 0.05);
+                    blue.moveTo(i * Math.random(), Math.random(), Math.random());
+        
+        
+        
       }
 
       //Moving
@@ -204,13 +210,15 @@
         if (camera.position.x < -15) camera.position.x = -15;
         if (camera.position.z > 15) camera.position.z = 15;
         if (camera.position.z < -15) camera.position.z = -15;
+
         //trigger corner
-        if (
+        if ( 
           camera.position.x < 15 &&
           camera.position.x > 10 &&
           camera.position.z < 15 &&
           camera.position.z > 10
-        ) {
+        )            
+          {
           document.getElementById("Question").style.display = "block";
           document.getElementById("position").src = "page1.html";
         }
@@ -219,7 +227,7 @@
         renderer.render(scene, camera);
       }
       animate();
-      //
+      //question      
       window.addEventListener(
         "message",
         event => {
