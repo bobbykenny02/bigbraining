@@ -101,33 +101,21 @@
       plane.rotation.x = Math.PI / 2;
       scene.add(plane);
 
-            // array of stool object
       var stool = new Array();
-      // Generate some stools
+
+      var black = new objectBase("assets/amongusblack.glb", scene, 0.05);
+      var blue = new objectBase("assets/amongusblue.glb", scene, 0.05);
+      var brown = new objectBase("assets/amongusbrown.glb", scene, 0.05);
+      var cyan = new objectBase("assets/amonguscyan.glb", scene, 0.05);
+      var green = new objectBase("assets/amongusgreen.glb", scene, 0.05);
+      var lime = new objectBase("assets/amonguslime.glb", scene, 0.05);
+      var orange = new objectBase("assets/amongusorange.glb", scene, 0.05);
+      var pink = new objectBase("assets/amonguspink.glb", scene, 0.05);
+      var red = new objectBase("assets/amongusred.glb", scene, 0.05);
+      var yellow = new objectBase("assets/amongusyellow.glb", scene, 0.05);
+
       for (var i = 0; i < 5; i++) {
-        var stool1 = new objectBase("assets/stool.glb", scene, 0.05);
-        // Position them
-        stool1.moveTo(i * 3, -5, 0);
-        //add to array
-        stool.push(stool1);
-      }
-      
-      
-      // array of stool object
-      var stool = new Array();
-
-      new var black = objectBase("assets/amongusblack.glb", scene, 0.05);
-      new var blue = objectBase("assets/amongusblue.glb", scene, 0.05);
-      new var brown = objectBase("assets/amongusbrown.glb", scene, 0.05);
-      new var cyan = objectBase("assets/amonguscyan.glb", scene, 0.05);
-      new var green = objectBase("assets/amongusgreen.glb", scene, 0.05);
-      new var lime = objectBase("assets/amonguslime.glb", scene, 0.05);
-      new var organge = objectBase("assets/amongusorange.glb", scene, 0.05);
-      new var pink = objectBase("assets/amonguspink.glb", scene, 0.05);
-      new var red = objectBase("assets/amongusred.glb", scene, 0.05);
-      new var yellow = objectBase("assets/amongusyellow.glb", scene, 0.05);
-
-      index = Math.floor(Math.random() * 9);
+      i = Math.floor(Math.random() * 9);
       var listofchar = [
         black,
         blue,
@@ -141,7 +129,7 @@
         yellow
       ];
 
-      var stool1 = listofchar[index];
+      var stool1 = listofchar[i];
 
       // Position them
       stool1.moveTo(stool1 * 10, -10, 15);
