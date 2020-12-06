@@ -115,26 +115,27 @@
       var yellow = new objectBase("assets/amongusyellow.glb", scene, 0.05);
 
       for (var i = 0; i < 5; i++) {
-      i = Math.floor(Math.random() * 9);
-      var listofchar = [
-        black,
-        blue,
-        brown,
-        cyan,
-        green,
-        lime,
-        orange,
-        pink,
-        red,
-        yellow
-      ];
+        index = Math.floor(Math.random() * 9);
+        var listofchar = [
+          black,
+          blue,
+          brown,
+          cyan,
+          green,
+          lime,
+          orange,
+          pink,
+          red,
+          yellow
+        ];
 
-      var stool1 = listofchar[i];
-
-      // Position them
-      stool1.moveTo(stool1 * 10, -10, 15);
-      //add to array
-      stool.push(stool1);
+        var stool1 = listofchar[index];
+        listofchar.splice(index, 1)
+        // Position them
+        stool1.moveTo(index * 10, -10, 15);
+        //add to array
+        stool.push(stool1);
+      }
 
       //Moving
       var isForward = 0;
