@@ -101,7 +101,7 @@
       plane.rotation.x = Math.PI / 2;
       scene.add(plane);
       var stool = new Array();
-      
+
       var black = new objectBase("assets/amongusblack.glb", scene, 0.05);
       var blue = new objectBase("assets/amongusblue.glb", scene, 0.05);
       var brown = new objectBase("assets/amongusbrown.glb", scene, 0.05);
@@ -112,24 +112,24 @@
       var pink = new objectBase("assets/amonguspink.glb", scene, 0.05);
       var red = new objectBase("assets/amongusred.glb", scene, 0.05);
       var yellow = new objectBase("assets/amongusyellow.glb", scene, 0.05);
-      
+
       var listofchar = [
-          black,
-          blue,
-          brown,
-          cyan,
-          green,
-          lime,
-          orange,
-          pink,
-          red,
-          yellow
-        ];
+        black,
+        blue,
+        brown,
+        cyan,
+        green,
+        lime,
+        orange,
+        pink,
+        red,
+        yellow
+      ];
 
       for (var i = 0; i < 5; i++) {
         index = Math.floor(Math.random() * listofchar.length);
         var stool1 = listofchar[index];
-        listofchar.splice(index, 1)
+        listofchar.splice(index, 1);
         // Position them
         stool1.moveTo(i * 10, -10, 15);
         //add to array
@@ -192,6 +192,7 @@
       }
 
       var clock = new THREE.Clock();
+
       //animation
       function animate() {
         for (var i = 0; i < 5; i++) {
