@@ -100,9 +100,8 @@
       // Rotate 90 degrees so its flat
       plane.rotation.x = Math.PI / 2;
       scene.add(plane);
-
       var stool = new Array();
-
+      
       var black = new objectBase("assets/amongusblack.glb", scene, 0.05);
       var blue = new objectBase("assets/amongusblue.glb", scene, 0.05);
       var brown = new objectBase("assets/amongusbrown.glb", scene, 0.05);
@@ -132,7 +131,7 @@
         var stool1 = listofchar[index];
         listofchar.splice(index, 1)
         // Position them
-        stool1.moveTo(index * 10, -10, 15);
+        stool1.moveTo(i * 10, -10, 15);
         //add to array
         stool.push(stool1);
       }
@@ -193,6 +192,8 @@
       }
 
       var clock = new THREE.Clock();
+
+      //animation
       function animate() {
         for (var i = 0; i < 5; i++) {
           stool[i].frameMove();
