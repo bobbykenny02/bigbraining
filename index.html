@@ -126,18 +126,22 @@
         yellow
       ];
 
-      for (var i = 0; i < listofchar.length; i++) {
+      var count = listofchar.length;
+      for (var i = 0; i < count; i++) {
         index = Math.floor(Math.random() * listofchar.length);
+        console.log("r=" + index);
         var stool1 = listofchar[index];
         listofchar.splice(index, 1);
         // Position them
         var x = 0;
         var z = 0;
-        var r = Math.floor(Math.random() * 30) - 15;
+        var r = Math.floor(Math.random() * 15) - 7.5;
         var l = Math.floor(Math.random() * 4);
+        r = r * 2;
         if (l == 0) {
           x = 15;
           z = r;
+          stool1.obj.rotation.z = Math.PI / 2;
         }
         if (l == 1) {
           x = -15;
@@ -151,8 +155,6 @@
           x = r;
           z = -15;
         }
-
-        console.log(x + " " + z);
 
         stool1.moveTo(x, -5, z, 15);
         //add to array
@@ -212,20 +214,39 @@
         if (keyCode == 32) {
           isJump = 1;
         }
+        if (keyCode == 74) {
+          document.getElementById("Question").style.display = "block";
+          document.getElementById("position").src = "page1.html";
+        }
+        if (keyCode == 17) {
+          //        var vector = new THREE.Vector3();
+          //	camera.getWorldDirection(direction);
+          var r = new THREE.Raycaster();
+          r.set(camera.getWorldPosition(), camera.getWorldDirection());
+          const intersects = r.intersectObjects(scene.children, true);
+          for (let i = 0; i < intersects.length; i++) {
+            if (intersects[i].object != plane) {
+              for (a = 0; a < stool.length; a++) {
+                if (intersects[i].object.parent.uuid == stool[a].obj.uuid) {
+                  stool[a].obj.position.y = 1;
+                }
+              }
+            }
+          }
+        }
       }
 
       var clock = new THREE.Clock();
 
       //animation
       function animate() {
-        for (var i = 0; i < 5; i++) {
-          stool[i].frameMove();
-        }
         var delta = clock.getDelta();
 
         if (isForward) {
           var direction = new THREE.Vector3();
           camera.getWorldDirection(direction);
+          direction.y = 0;
+
           var speed = 10;
           if (isRunning) speed = 18;
           camera.position.addScaledVector(direction, speed * delta * isForward);
@@ -264,6 +285,7 @@
         ) {
           document.getElementById("Question").style.display = "block";
           document.getElementById("position").src = "page1.html";
+          var questioup = 1;
         }
 
         requestAnimationFrame(animate);
