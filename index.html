@@ -126,7 +126,7 @@
         red,
         yellow
       ];
-
+      
       var count= listofchar.length;
       for (var i = 0; i < count; i++) {
         index = Math.floor(Math.random() * listofchar.length);
@@ -308,6 +308,7 @@ direction.y=0;
         event => {
           if (event.data == "page1 correct") {
             document.getElementById("Question").style.display = "none";
+             
           }
         },
         false
