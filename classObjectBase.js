@@ -1,8 +1,10 @@
 class objectBase {
   obj;
   scene;
-  constructor(url, scene, scale) {
+  color;
+  constructor(url, scene, scale, color) {
     this.scene = scene;
+    this.color = color;
     //Create cube as a place holder
     const geometry = new THREE.BoxGeometry();
     const material = new THREE.MeshBasicMaterial({ color: 0x00ff00 });
@@ -35,3 +37,4 @@ class objectBase {
   isJitter = 0;
   frameMove() {}
 }
+

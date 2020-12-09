@@ -157,3 +157,4 @@ THREE.PointerLockControls.prototype = Object.create(
   THREE.EventDispatcher.prototype
 );
 THREE.PointerLockControls.prototype.constructor = THREE.PointerLockControls;
+
