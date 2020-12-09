@@ -125,11 +125,7 @@
         pink,
         red,
         yellow
-      ];
-      var randomnumber = Math.floor(Math.random) * (listofchar.length);
-      var ejectedchar  = listofchar[ranndomnumber];
-      listofchar.splice(randomnumber, 1);
-      
+      ];     
       var count= (listofchar.length) ;
       for (var i = 0; i < count; i++) {
         index = Math.floor(Math.random() * (listofchar.length) );
@@ -320,14 +316,6 @@ direction.y=0;
         false
       );
     </script>
-    
-     <div
-      style="positon absol"
-      id="Statment"
-    >
-      <iframe id="where" width="100%" height="100%"></iframe>
-    </div>
-    
     <div
       style="display:none; position:absolute; left:calc( 50% - 200px ); top:50%; width:400px; height:200px; background:black; color: white;"
       id="Question"
