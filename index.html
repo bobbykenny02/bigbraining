@@ -127,9 +127,9 @@
         yellow
       ];
       
-      var count= listofchar.length;
+      var count= (listofchar.length) -1;
       for (var i = 0; i < count; i++) {
-        index = Math.floor(Math.random() * listofchar.length);
+        index = Math.floor(Math.random() * (listofchar.length) -1);
 console.log("r=" + index);
         var stool1 = listofchar[index];
         listofchar.splice(index, 1);
@@ -308,7 +308,9 @@ direction.y=0;
         event => {
           if (event.data == "page1 correct") {
             document.getElementById("Question").style.display = "none";
-             
+         var x =1
+         
+              alert(listofchar[0])
           }
         },
         false
