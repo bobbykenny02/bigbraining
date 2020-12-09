@@ -77,6 +77,7 @@
           camControls.lock();
         },
         false
+        
       );
       camControls.addEventListener("lock", function() {
         startButton.style.display = "none";
@@ -126,10 +127,10 @@
         yellow
       ];
 
-      var count = listofchar.length;
+      var count= listofchar.length;
       for (var i = 0; i < count; i++) {
         index = Math.floor(Math.random() * listofchar.length);
-        console.log("r=" + index);
+console.log("r=" + index);
         var stool1 = listofchar[index];
         listofchar.splice(index, 1);
         // Position them
@@ -137,7 +138,7 @@
         var z = 0;
         var r = Math.floor(Math.random() * 15) - 7.5;
         var l = Math.floor(Math.random() * 4);
-        r = r * 2;
+        r=r*2;
         if (l == 0) {
           x = 15;
           z = r;
@@ -155,6 +156,7 @@
           x = r;
           z = -15;
         }
+
 
         stool1.moveTo(x, -5, z, 15);
         //add to array
@@ -214,26 +216,31 @@
         if (keyCode == 32) {
           isJump = 1;
         }
-        if (keyCode == 74) {
+if (keyCode == 74){ 
           document.getElementById("Question").style.display = "block";
           document.getElementById("position").src = "page1.html";
-        }
-        if (keyCode == 17) {
-          //        var vector = new THREE.Vector3();
-          //	camera.getWorldDirection(direction);
-          var r = new THREE.Raycaster();
-          r.set(camera.getWorldPosition(), camera.getWorldDirection());
-          const intersects = r.intersectObjects(scene.children, true);
-          for (let i = 0; i < intersects.length; i++) {
-            if (intersects[i].object != plane) {
-              for (a = 0; a < stool.length; a++) {
-                if (intersects[i].object.parent.uuid == stool[a].obj.uuid) {
-                  stool[a].obj.position.y = 1;
-                }
-              }
-            }
-          }
-        }
+
+}
+if (keyCode == 17) {
+//        var vector = new THREE.Vector3();
+//	camera.getWorldDirection(direction);
+	var r=new THREE.Raycaster();
+        r.set( camera.getWorldPosition(), camera.getWorldDirection() );
+	const intersects = r.intersectObjects( scene.children,true );
+	for ( let i = 0; i < intersects.length; i ++ ) {
+		if (intersects[ i ].object != plane) {
+
+for (a=0; a< stool.length; a ++) {
+
+if (intersects[i].object.parent.uuid == stool[a].obj.uuid) {
+		stool[a].obj.position.y=1;
+
+}
+}		}
+
+
+	}
+}
       }
 
       var clock = new THREE.Clock();
@@ -245,7 +252,7 @@
         if (isForward) {
           var direction = new THREE.Vector3();
           camera.getWorldDirection(direction);
-          direction.y = 0;
+direction.y=0;	
 
           var speed = 10;
           if (isRunning) speed = 18;
@@ -285,8 +292,11 @@
         ) {
           document.getElementById("Question").style.display = "block";
           document.getElementById("position").src = "page1.html";
-          var questioup = 1;
+          var questioup=1;
         }
+
+
+
 
         requestAnimationFrame(animate);
         renderer.render(scene, camera);
